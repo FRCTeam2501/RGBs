@@ -6,6 +6,8 @@ using namespace std;
 
 RGB::RGB()
 {
+	RGB::ledCount = ledCount;
+
     ledString.freq = WS2811_TARGET_FREQ;
 	ledString.dmanum = 10;
 	ledString.channel[0].gpionum = 21;
@@ -18,7 +20,14 @@ RGB::RGB()
 	ledString.channel[1].invert = 0;
 	ledString.channel[1].brightness = 0;
 
+   //ws2811_init(&ledString);
     ws2811_return_t ret = ws2811_init(&ledString);
+
+	if (ret != WS2811_SUCCESS) {
+		fprintf(stderr, "ws2811_init failed: %s\n", ws2811_get_return_t_str(ret));
+		cout<<"testing"<<endl;
+		exit(ret);
+	}
 
 }
 
@@ -59,6 +68,11 @@ void RGB::Render() {
 	}
 }
 
+RGB rgb;
 
-
-
+int main(){
+	cout<<"a";
+	rgb.SetAll(COLORS::BLUE);
+	cout<<"b"<<endl;
+	return 0;
+}
