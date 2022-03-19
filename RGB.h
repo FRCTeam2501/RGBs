@@ -36,7 +36,7 @@ class RGB
 
 private:
     
-    int ledCount = 10;
+    int32_t ledCount = 10;
 
 public:
     RGB();
@@ -64,10 +64,6 @@ public:
 	 */
 	void Render();
 };
-
-
-
-
 
 
 
