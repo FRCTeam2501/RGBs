@@ -34,6 +34,10 @@ namespace COLORS {
 	constexpr int numberOfLeds = 10;
 }
 
+bool ending = false;
+bool designChanged = false;
+int switcher = 1;
+int switchTracker = 1;
 
 class RGB
 {
