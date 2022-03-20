@@ -19,6 +19,7 @@ namespace COLORS {
 	/**
 	 * @brief Standard Colors
 	 */
+	//these colors are stored in base 16
 	constexpr ws2811_led_t	RED			= 0x00FF0000;
 	constexpr ws2811_led_t	ORANGE		= 0x00FF8000;
 	constexpr ws2811_led_t	YELLOW		= 0x00FFFF00;
@@ -29,14 +30,19 @@ namespace COLORS {
 	constexpr ws2811_led_t	PINK		= 0x00FF0080;
 	constexpr ws2811_led_t	WHITE		= 0x00FFFFFF;
 	constexpr ws2811_led_t	BLACK		= 0x00000000;
+
+	constexpr int numberOfLeds = 10;
 }
+
 
 class RGB
 {
 
 private:
     
-    int32_t ledCount = 10;
+    int32_t ledCount = COLORS::numberOfLeds;
+
+	
 
 public:
     RGB();
@@ -63,7 +69,28 @@ public:
 	 * @brief Render the changes
 	 */
 	void Render();
+
+	void UniversalClock(int msWait);
+
+	void MoveArray(bool wrapAround, bool forward, int moveNumber); //should it move the leds to the front or back if they are knocked off or delete them, number of moves to make
+
+	void RenderArray();
+
+	union CRGB
+	{
+		struct{
+			union{
+				uint8_t red;
+			};
+			union{
+				uint8_t green;
+			};
+			union{
+				uint8_t blue;
+			};
+		};
+		uint32_t color;
+	};
+	CRGB LEDStore;
+	CRGB LEDMap[COLORS::numberOfLeds];
 };
-
-
-
