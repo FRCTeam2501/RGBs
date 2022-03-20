@@ -26,7 +26,7 @@ RGB::RGB()
 
 	if (ret != WS2811_SUCCESS) {
 		fprintf(stderr, "ws2811_init failed: %s\n", ws2811_get_return_t_str(ret));
-		cout<<"testing"<<endl;
+		// cout<<"testing"<<endl;
 		exit(ret);
 	}
 
@@ -82,21 +82,21 @@ void RGB::RenderArray(){
 }
 
 void RGB::MoveArray(bool wrapAround, bool forward, int moveNumber){
-	cout<<"MoveArray: a";
+	//cout<<"MoveArray: a";
 	for(int a = 0; a<moveNumber;a++){
-		cout<<"b";
+		//cout<<"b";
 		if(forward){
-			cout<<"c";
+			//cout<<"c";
 			rgb.LEDStore = rgb.LEDMap[COLORS::numberOfLeds - 1];
 			for(int b = COLORS::numberOfLeds - 1;b>0;b--){
 				rgb.LEDMap[b] = rgb.LEDMap[b-1];
-				cout<<b;
+				//cout<<b;
 		}
 		if(wrapAround){
 			rgb.LEDMap[0] = rgb.LEDStore;
 		}
 		}else{
-			cout<<"d";
+			//cout<<"d";
 			rgb.LEDStore = rgb.LEDMap[0];
 			for(int b = 0;b<COLORS::numberOfLeds;b++){
 				rgb.LEDMap[b] = rgb.LEDMap[b+1];
@@ -106,21 +106,31 @@ void RGB::MoveArray(bool wrapAround, bool forward, int moveNumber){
 		}
 	}
 }
-cout<<endl;
+//cout<<endl;
 }
 
 
-
 int main(){
-	/*
-	for(int i = 0; i<10;i++){
-		rgb.LEDMap[i].red = 255;
-		rgb.LEDMap[i].green = 15;
-		rgb.LEDMap[i].blue = 46;
+	
+while(ending == false){
+	switchTracker = switcher;
+	switch (switcher)
+	{
+	case 1:
 		
-		rgb.Set(i,rgb.LEDMap[i].color);
-	}
-*/
+		break;
+
+	default:
+		break;
+}
+if(switchTracker != switcher){
+	designChanged = true;
+}else{
+	designChanged = false;
+}
+}
+
+
 	rgb.LEDMap[7].red = 255;
 	rgb.LEDMap[8].blue = 255;
 	rgb.LEDMap[9].green = 255;
@@ -128,19 +138,10 @@ int main(){
 	rgb.RenderArray();
 	for(int g = 0;g<30;g++){
 	usleep(200000);
-	rgb.MoveArray(true,true,3);
+	rgb.MoveArray(true,true,1);
 	rgb.RenderArray();
 	}
 
-
-
-	//rgb.Set(0,COLORS::RED);
-	//rgb.Set(1,COLORS::GREEN);
-	//rgb.Set(10,COLORS::BLUE);
-	//rgb.Render();
-	//usleep(5000000);
-	//rgb.SetAll(COLORS::ORANGE);
-	//rgb.Render();
 
 	return 0;
 }
