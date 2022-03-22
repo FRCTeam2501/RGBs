@@ -109,9 +109,45 @@ void RGB::MoveArray(bool wrapAround, bool forward, int moveNumber){
 //cout<<endl;
 }
 
+void RGB::CalcVelAccel(){
+	for(int t = 0; t < COLORS::numberOfLeds - 1; t++){
+		
+		if(LEDMap[t].rvel + LEDMap[t].raccel > LEDS::maxVelocity){
+			LEDMap[t].rvel = LEDS::maxVelocity;
+		}else{
+			LEDMap[t].rvel += LEDMap[t].raccel;
+		}
+		if(LEDMap[t].gvel + LEDMap[t].gaccel > LEDS::maxVelocity){
+			LEDMap[t].gvel = LEDS::maxVelocity;
+		}else{
+			LEDMap[t].gvel += LEDMap[t].gaccel;
+		}
+		if(LEDMap[t].bvel + LEDMap[t].baccel > LEDS::maxVelocity){
+			LEDMap[t].bvel = LEDS::maxVelocity;
+		}else{
+			LEDMap[t].bvel += LEDMap[t].baccel;
+		}
+		
+		if(LEDMap[t].red + LEDMap[t].rvel > LEDS::maxPosition){
+			LEDMap[t].red = LEDS::maxPosition;
+		}else{
+			LEDMap[t].red += LEDMap[t].rvel;
+		}
+		if(LEDMap[t].green + LEDMap[t].gvel > LEDS::maxPosition){
+			LEDMap[t].green = LEDS::maxPosition;
+		}else{
+			LEDMap[t].green += LEDMap[t].gvel;
+		}
+		if(LEDMap[t].blue + LEDMap[t].bvel > LEDS::maxPosition){
+			LEDMap[t].blue = LEDS::maxPosition;
+		}else{
+			LEDMap[t].blue += LEDMap[t].bvel;
+		}
+	}
+}
 
 int main(){
-	
+	/*
 while(ending == false){
 	switchTracker = switcher;
 	switch (switcher)
@@ -129,19 +165,23 @@ if(switchTracker != switcher){
 	designChanged = false;
 }
 }
+*/
 
-
+rgb.LEDMap[8].green = 255;
 	rgb.LEDMap[7].red = 255;
-	rgb.LEDMap[8].blue = 255;
-	rgb.LEDMap[9].green = 255;
+	
+	rgb.LEDMap[9].blue = 255;
+	//rgb.LEDMap[9].rvel =10;
+	rgb.LEDMap[6].bvel = 10;
 
 	rgb.RenderArray();
-	for(int g = 0;g<30;g++){
-	usleep(200000);
+	for(int g = 0;g<50;g++){
+	usleep(300000);
 	rgb.MoveArray(true,true,1);
+	rgb.CalcVelAccel();
 	rgb.RenderArray();
+	cout<<rgb.LEDMap[9].blue<<endl;
 	}
-
 
 	return 0;
 }
