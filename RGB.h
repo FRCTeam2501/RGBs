@@ -34,6 +34,11 @@ namespace COLORS {
 	constexpr int numberOfLeds = 10;
 }
 
+namespace LEDS{
+	constexpr int maxVelocity = 15;
+	constexpr int maxPosition = 255;
+}
+
 bool ending = false;
 bool designChanged = false;
 int switcher = 1;
@@ -80,20 +85,24 @@ public:
 
 	void RenderArray();
 
-	union CRGB
+	void CalcVelAccel();
+
+	struct CRGB
 	{
-		struct{
-			union{
+		union{
+			struct{
+				uint8_t blue;
+				uint8_t green;
 				uint8_t red;
 			};
-			union{
-				uint8_t green;
-			};
-			union{
-				uint8_t blue;
-			};
+			uint32_t color;
 		};
-		uint32_t color;
+		uint8_t rvel;
+		uint8_t gvel;
+		uint8_t bvel;
+		uint8_t raccel;
+		uint8_t gaccel;
+		uint8_t baccel;
 	};
 	CRGB LEDStore;
 	CRGB LEDMap[COLORS::numberOfLeds];
