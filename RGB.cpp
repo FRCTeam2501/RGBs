@@ -175,6 +175,7 @@ int main(){
 	
 while(ending == false){
 	switchTracker = switcher;
+	if(designChanged){
 	switch (switcher)
 	{
 	case 1:
@@ -183,12 +184,24 @@ while(ending == false){
 
 	default:
 		break;
-}
+	cout<<"Switch error"<<endl;
+	}
+	}else{
+	switch(switcher){
+	   case 1: 
+		
+		  break;
+	   default:
+	       cout<<"Switch error"<<endl;
+		  break;
+	}
+	}
 if(switchTracker != switcher){
 	designChanged = true;
 }else{
 	designChanged = false;
 }
+	UniversalClock(50); //50ms is one tick
 }
 
 
