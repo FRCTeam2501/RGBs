@@ -172,7 +172,7 @@ void RGB::CalcVelAccel(){
 }
 
 int main(){
-	/*
+	
 while(ending == false){
 	switchTracker = switcher;
 	switch (switcher)
@@ -190,14 +190,16 @@ if(switchTracker != switcher){
 	designChanged = false;
 }
 }
-*/
 
-rgb.LEDMap[8].green = 255;
+
+	rgb.LEDMap[8].green = 255;
 	rgb.LEDMap[7].red = 255;
 	
 	rgb.LEDMap[9].blue = 255;
 	//rgb.LEDMap[9].rvel =10;
 	rgb.LEDMap[6].bvel = 10;
+	rgb.LEDMap[6].rvel = -10;
+	rgb.LEDMap[6].red = 255;
 
 	rgb.RenderArray();
 	for(int g = 0;g<50;g++){
@@ -205,7 +207,7 @@ rgb.LEDMap[8].green = 255;
 	rgb.MoveArray(true,true,1);
 	rgb.CalcVelAccel();
 	rgb.RenderArray();
-	cout<<rgb.LEDMap[9].blue<<endl;
+	//cout<<rgb.LEDMap[9].blue<<endl;
 	}
 
 	return 0;
