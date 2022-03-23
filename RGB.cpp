@@ -112,38 +112,63 @@ void RGB::MoveArray(bool wrapAround, bool forward, int moveNumber){
 void RGB::CalcVelAccel(){
 	for(int t = 0; t < COLORS::numberOfLeds - 1; t++){
 		
-		if(LEDMap[t].rvel + LEDMap[t].raccel > LEDS::maxVelocity){
-			LEDMap[t].rvel = LEDS::maxVelocity;
-		}else{
-			LEDMap[t].rvel += LEDMap[t].raccel;
-		}
-		if(LEDMap[t].gvel + LEDMap[t].gaccel > LEDS::maxVelocity){
-			LEDMap[t].gvel = LEDS::maxVelocity;
-		}else{
-			LEDMap[t].gvel += LEDMap[t].gaccel;
-		}
-		if(LEDMap[t].bvel + LEDMap[t].baccel > LEDS::maxVelocity){
-			LEDMap[t].bvel = LEDS::maxVelocity;
-		}else{
-			LEDMap[t].bvel += LEDMap[t].baccel;
-		}
-		
-		if(LEDMap[t].red + LEDMap[t].rvel > LEDS::maxPosition){
-			LEDMap[t].red = LEDS::maxPosition;
-		}else{
-			LEDMap[t].red += LEDMap[t].rvel;
-		}
-		if(LEDMap[t].green + LEDMap[t].gvel > LEDS::maxPosition){
-			LEDMap[t].green = LEDS::maxPosition;
-		}else{
-			LEDMap[t].green += LEDMap[t].gvel;
-		}
-		if(LEDMap[t].blue + LEDMap[t].bvel > LEDS::maxPosition){
-			LEDMap[t].blue = LEDS::maxPosition;
-		}else{
-			LEDMap[t].blue += LEDMap[t].bvel;
-		}
-	}
+        if(LEDMap[t].rvel + LEDMap[t].raccel > LEDS::maxVelocity || LEDMap[t].rvel + LEDMap[t].raccel < LEDS::minVelocity){
+            if(LEDMap[t].rvel + LEDMap[t].raccel > LEDS::maxVelocity){
+                LEDMap[t].rvel = LEDS::maxVelocity;
+            }else{
+                LEDMap[t].rvel = LEDS::minVelocity;
+            }
+            }else{
+                 LEDMap[t].rvel += LEDMap[t].raccel;
+            }
+         if(LEDMap[t].gvel + LEDMap[t].gaccel > LEDS::maxVelocity || LEDMap[t].gvel + LEDMap[t].gaccel < LEDS::minVelocity){
+            if(LEDMap[t].gvel + LEDMap[t].raccel > LEDS::maxVelocity){
+                LEDMap[t].gvel = LEDS::maxVelocity;
+            }else{
+                LEDMap[t].gvel = LEDS::minVelocity;
+            }
+            }else{
+                 LEDMap[t].gvel += LEDMap[t].gaccel;
+            }
+          if(LEDMap[t].bvel + LEDMap[t].baccel > LEDS::maxVelocity || LEDMap[t].bvel + LEDMap[t].baccel < LEDS::minVelocity){
+            if(LEDMap[t].bvel + LEDMap[t].baccel > LEDS::maxVelocity){
+                LEDMap[t].bvel = LEDS::maxVelocity;
+            }else{
+                LEDMap[t].bvel = LEDS::minVelocity;
+            }
+            }else{
+                 LEDMap[t].bvel += LEDMap[t].baccel;
+            }
+            
+            
+         if(LEDMap[t].red + LEDMap[t].rvel > LEDS::maxPosition || LEDMap[t].red + LEDMap[t].rvel < LEDS::minPosition){
+            if(LEDMap[t].red + LEDMap[t].rvel > LEDS::maxPosition){
+                LEDMap[t].red = LEDS::maxPosition;
+            }else{
+                LEDMap[t].red = LEDS::minPosition;
+            }
+            }else{
+                 LEDMap[t].red += LEDMap[t].rvel;
+            }
+         if(LEDMap[t].green + LEDMap[t].gvel > LEDS::maxPosition || LEDMap[t].green + LEDMap[t].gvel < LEDS::minPosition){
+            if(LEDMap[t].green + LEDMap[t].gvel > LEDS::maxPosition){
+                LEDMap[t].green = LEDS::maxPosition;
+            }else{
+                LEDMap[t].green = LEDS::minPosition;
+            }
+            }else{
+                 LEDMap[t].green += LEDMap[t].gvel;
+            }
+          if(LEDMap[t].blue + LEDMap[t].bvel > LEDS::maxPosition || LEDMap[t].blue + LEDMap[t].bvel < LEDS::minPosition){
+            if(LEDMap[t].blue + LEDMap[t].bvel > LEDS::maxPosition){
+                LEDMap[t].blue = LEDS::maxPosition;
+            }else{
+                LEDMap[t].blue = LEDS::minPosition;
+            }
+            }else{
+                 LEDMap[t].blue += LEDMap[t].bvel;
+            }
+            }
 }
 
 int main(){
