@@ -176,9 +176,9 @@ void RGB::CalcVelAccel(){
 
 void RGB::GradualColorChangeSet(int rgbNumber, int targetColor, int tickInterval){
 	LEDMap[rgbNumber].colorTarget = targetColor;
-	((LEDMap[rgbNumber].blue - LEDMap[rgbNumber].blueTarget) / tickInterval) = LEDMap[rgbNumber].bvel;
-	((LEDMap[rgbNumber].green - LEDMap[rgbNumber].greenTarget) / tickInterval) = LEDMap[rgbNumber].gvel;
-	((LEDMap[rgbNumber].red - LEDMap[rgbNumber].redTarget) / tickInterval) = LEDMap[rgbNumber].rvel;
+	LEDMap[rgbNumber].bvel = ((LEDMap[rgbNumber].blue - LEDMap[rgbNumber].blueTarget) / tickInterval);
+	LEDMap[rgbNumber].gvel = ((LEDMap[rgbNumber].green - LEDMap[rgbNumber].greenTarget) / tickInterval);
+	LEDMap[rgbNumber].rvel = ((LEDMap[rgbNumber].red - LEDMap[rgbNumber].redTarget) / tickInterval);
 }
 
 int main(){
