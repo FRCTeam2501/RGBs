@@ -113,6 +113,10 @@ void RGB::MoveArray(bool wrapAround, bool forward, int moveNumber){
 void RGB::CalcVelAccel(){
 	for(int t = 0; t < COLORS::numberOfLeds - 1; t++){
 		
+		LEDMap[t].redSet = LEDMap[t].red;
+		LEDMap[t].greenSet = LEDMap[t].green;
+		LEDMap[t].blueSet = LEDMap[t].blue;
+
         if(LEDMap[t].rvel + LEDMap[t].raccel > LEDS::maxVelocity || LEDMap[t].rvel + LEDMap[t].raccel < LEDS::minVelocity){
             if(LEDMap[t].rvel + LEDMap[t].raccel > LEDS::maxVelocity){
                 LEDMap[t].rvel = LEDS::maxVelocity;
@@ -186,7 +190,7 @@ void RGB::GradualColorChangeSet(int rgbNumber, int targetColor, int tickInterval
 }
 
 int main(){
-	
+/*	
 while(ending == false){
 	switchTracker = switcher;
 	switch (switcher)
@@ -204,7 +208,7 @@ if(switchTracker != switcher){
 	designChanged = false;
 }
 }
-
+*/
 
 	rgb.LEDMap[8].green = 255;
 	rgb.LEDMap[7].red = 255;
@@ -217,7 +221,7 @@ if(switchTracker != switcher){
 
 	rgb.RenderArray();
 	for(int g = 0;g<50;g++){
-	usleep(300000);
+	usleep(5000000);
 	rgb.MoveArray(true,true,1);
 	rgb.CalcVelAccel();
 	rgb.RenderArray();
