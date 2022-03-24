@@ -35,12 +35,14 @@ namespace COLORS {
 }
 
 namespace LEDS{
-	constexpr int maxVelocity = 15;
+	constexpr int maxVelocity = 30;
+	constexpr int minVelocity = -30;
 	constexpr int maxPosition = 255;
+	constexpr int minPosition = 0;
 }
 
 bool ending = false;
-bool designChanged = false;
+bool designChanged = true;
 int switcher = 1;
 int switchTracker = 1;
 
@@ -87,6 +89,8 @@ public:
 
 	void CalcVelAccel();
 
+	void GradualColorChangeSet(int rgbNumber, int targetColor, int tickInterval);
+
 	struct CRGB
 	{
 		union{
@@ -97,12 +101,24 @@ public:
 			};
 			uint32_t color;
 		};
-		uint8_t rvel;
-		uint8_t gvel;
-		uint8_t bvel;
-		uint8_t raccel;
-		uint8_t gaccel;
-		uint8_t baccel;
+		union{
+			struct{
+				uint8_t blueTarget;
+				uint8_t greenTarget;
+				uint8_t redTarget;
+			};
+			uint32_t colorTarget;
+		};
+		double rvel;
+		double gvel;
+		double bvel;
+		double raccel;
+		double gaccel;
+		double baccel;
+
+		double blueSet;
+		double greenSet;
+		double redSet;
 	};
 	CRGB LEDStore;
 	CRGB LEDMap[COLORS::numberOfLeds];
