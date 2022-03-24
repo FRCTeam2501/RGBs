@@ -1,6 +1,7 @@
 #include <iostream>
 #include <unistd.h>
 #include<link.h>
+#include <math.h>
 using namespace std;
 
 #include "RGB.h"
@@ -168,9 +169,12 @@ void RGB::CalcVelAccel(){
             }else{
                  LEDMap[t].blueSet += LEDMap[t].bvel;
             }
-			LEDMap[t].red = LEDMap[t].redSet;
-			LEDMap[t].green = LEDMap[t].greenSet;
-			LEDMap[t].blue = LEDMap[t].blueSet;
+			LEDMap[t].red = ((uint8_t) lround(LEDMap[t].redSet));
+			//LEDMap[t].red = LEDMap[t].redSet;
+			LEDMap[t].green = ((uint8_t) lround(LEDMap[t].greenSet));
+			//LEDMap[t].green = LEDMap[t].greenSet;
+			LEDMap[t].blue = ((uint8_t) lround(LEDMap[t].blueSet));
+			//LEDMap[t].blue = LEDMap[t].blueSet;
             }
 }
 
