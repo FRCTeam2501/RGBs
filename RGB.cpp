@@ -148,7 +148,7 @@ void RGB::CalcVelAccel(){
                 LEDMap[t].red = LEDS::minPosition;
             }
             }else{
-                 LEDMap[t].red += LEDMap[t].rvel;
+                 LEDMap[t].redSet += LEDMap[t].rvel;
             }
          if(LEDMap[t].green + LEDMap[t].gvel > LEDS::maxPosition || LEDMap[t].green + LEDMap[t].gvel < LEDS::minPosition){
             if(LEDMap[t].green + LEDMap[t].gvel > LEDS::maxPosition){
@@ -157,7 +157,7 @@ void RGB::CalcVelAccel(){
                 LEDMap[t].green = LEDS::minPosition;
             }
             }else{
-                 LEDMap[t].green += LEDMap[t].gvel;
+                 LEDMap[t].greenSet += LEDMap[t].gvel;
             }
           if(LEDMap[t].blue + LEDMap[t].bvel > LEDS::maxPosition || LEDMap[t].blue + LEDMap[t].bvel < LEDS::minPosition){
             if(LEDMap[t].blue + LEDMap[t].bvel > LEDS::maxPosition){
@@ -166,16 +166,25 @@ void RGB::CalcVelAccel(){
                 LEDMap[t].blue = LEDS::minPosition;
             }
             }else{
-                 LEDMap[t].blue += LEDMap[t].bvel;
+                 LEDMap[t].blueSet += LEDMap[t].bvel;
             }
+			LEDMap[t].red = LEDMap[t].redSet;
+			LEDMap[t].green = LEDMap[t].greenSet;
+			LEDMap[t].blue = LEDMap[t].blueSet;
             }
+}
+
+void RGB::GradualColorChangeSet(int rgbNumber, int targetColor, int tickInterval){
+	LEDMap[rgbNumber].colorTarget = targetColor;
+	((LEDMap[rgbNumber].blue - LEDMap[rgbNumber].blueTarget) / tickInterval) = LEDMap[rgbNumber].bvel;
+	((LEDMap[rgbNumber].green - LEDMap[rgbNumber].greenTarget) / tickInterval) = LEDMap[rgbNumber].gvel;
+	((LEDMap[rgbNumber].red - LEDMap[rgbNumber].redTarget) / tickInterval) = LEDMap[rgbNumber].rvel;
 }
 
 int main(){
 	
 while(ending == false){
 	switchTracker = switcher;
-	if(designChanged){
 	switch (switcher)
 	{
 	case 1:
@@ -184,24 +193,12 @@ while(ending == false){
 
 	default:
 		break;
-	cout<<"Switch error"<<endl;
-	}
-	}else{
-	switch(switcher){
-	   case 1: 
-		
-		  break;
-	   default:
-	       cout<<"Switch error"<<endl;
-		  break;
-	}
-	}
+}
 if(switchTracker != switcher){
 	designChanged = true;
 }else{
 	designChanged = false;
 }
-	UniversalClock(50); //50ms is one tick
 }
 
 
