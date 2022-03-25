@@ -184,6 +184,15 @@ void RGB::CalcVelAccel(){
 
 			//if(LEDMap[t].colorTarget > 0){
 				//cout<<"blend stop attempt"<<endl;
+		if((abs(LEDMap[t].red - LEDMap[t].redTarget)<2)){
+			cout<<"red has reached target"<<endl;
+		}
+		if((abs(LEDMap[t].green - LEDMap[t].greenTarget)<2)){
+			cout<<"Green has reached target"<<endl;
+		}
+		if((abs(LEDMap[t].blue - LEDMap[t].blueTarget)<2)){
+			cout<<"Blue has reached target"<<endl;
+		}
 				if(((abs(LEDMap[t].red - LEDMap[t].redTarget)<2) && (abs(LEDMap[t].green - LEDMap[t].greenTarget)<2) && (abs(LEDMap[t].blue - LEDMap[t].blueTarget)<2)) || LEDMap[t].color == LEDMap[t].colorTarget){
 					 
 					LEDMap[t].rvel= 0;
