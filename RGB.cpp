@@ -224,6 +224,7 @@ void RGB::CalcVelAccel(){
 											
 					cout<<t<<": stoped blending"<<endl;
 					}
+					LEDMap[t].doingGradual = false;
 				}
 			//}
         }
