@@ -112,9 +112,30 @@ void RGB::MoveArray(bool wrapAround, bool forward, int moveNumber){
 
 void RGB::CalcVelAccel(){
 	for(int t = 0; t < COLORS::numberOfLeds; t++){
+
+		if(LEDMap[t].doingGradual == false){
 		LEDMap[t].redSet = LEDMap[t].red;
 		LEDMap[t].greenSet = LEDMap[t].green;
 		LEDMap[t].blueSet = LEDMap[t].blue;
+		}
+
+
+		if(t == 9){
+		if((abs(LEDMap[t].red - LEDMap[t].redTarget) == 0)){
+			cout<<"red has reached target"<<endl;
+			LEDMap[t].rvel= 0;
+		}
+		if((abs(LEDMap[t].green - LEDMap[t].greenTarget)== 0)){
+			cout<<"Green has reached target"<<endl;
+			LEDMap[t].gvel= 0;
+		}
+		if((abs(LEDMap[t].blue - LEDMap[t].blueTarget) == 0)){
+			cout<<"Blue has reached target"<<endl;
+			LEDMap[t].bvel= 0;
+		}
+			}
+
+		
 
         if(LEDMap[t].rvel + LEDMap[t].raccel > LEDS::maxVelocity || LEDMap[t].rvel + LEDMap[t].raccel < LEDS::minVelocity){
             if(LEDMap[t].rvel + LEDMap[t].raccel > LEDS::maxVelocity){
@@ -150,13 +171,19 @@ void RGB::CalcVelAccel(){
                 LEDMap[t].redSet = LEDS::maxPosition;
             }else{
                 LEDMap[t].redSet = LEDS::minPosition;
-				cout<<"red min reached"<<endl;
+				cout<<"red min reached "<<LEDMap[t].rvel<<" "<<((int) LEDMap[t].red)<<endl;
+				
             }
             }else{
-				if(t == 9){
-				cout<<"red accounted for"<<endl;}
+				cout<<"rset and rvel: "<<LEDMap[t].redSet<<" "<<LEDMap[t].rvel<<endl;
                  LEDMap[t].redSet += LEDMap[t].rvel;
+				 if(t == 9 && LEDMap[t].rvel != 0){
+					test ++;
+				cout<<test<<": tracker 9r"<<endl;
+				cout<<LEDMap[t].redSet<<endl;
+				}
             }
+			//cout<<test<<": "
          if(LEDMap[t].green + LEDMap[t].gvel > LEDS::maxPosition || LEDMap[t].green + LEDMap[t].gvel < LEDS::minPosition){
             if(LEDMap[t].green + LEDMap[t].gvel > LEDS::maxPosition){
                 LEDMap[t].greenSet = LEDS::maxPosition;
@@ -184,15 +211,7 @@ void RGB::CalcVelAccel(){
 
 			//if(LEDMap[t].colorTarget > 0){
 				//cout<<"blend stop attempt"<<endl;
-		if((abs(LEDMap[t].red - LEDMap[t].redTarget)<2)){
-			cout<<"red has reached target"<<endl;
-		}
-		if((abs(LEDMap[t].green - LEDMap[t].greenTarget)<2)){
-			cout<<"Green has reached target"<<endl;
-		}
-		if((abs(LEDMap[t].blue - LEDMap[t].blueTarget)<2)){
-			cout<<"Blue has reached target"<<endl;
-		}
+			
 				if(((abs(LEDMap[t].red - LEDMap[t].redTarget)<2) && (abs(LEDMap[t].green - LEDMap[t].greenTarget)<2) && (abs(LEDMap[t].blue - LEDMap[t].blueTarget)<2)) || LEDMap[t].color == LEDMap[t].colorTarget){
 					 
 					LEDMap[t].rvel= 0;
@@ -201,7 +220,10 @@ void RGB::CalcVelAccel(){
 					LEDMap[t].raccel= 0;
 					LEDMap[t].gaccel= 0;
 					LEDMap[t].baccel= 0;
-					//cout<<t<<": stoped blending"<<endl;
+					if(t == 9){
+											
+					cout<<t<<": stoped blending"<<endl;
+					}
 				}
 			//}
         }
@@ -214,10 +236,14 @@ void RGB::GradualColorChangeSet(int rgbNumber, uint32_t targetColor, int tickInt
 	LEDMap[rgbNumber].colorTarget = targetColor;
 	LEDMap[rgbNumber].bvel = ((LEDMap[rgbNumber].blueTarget - LEDMap[rgbNumber].blue) / (uint8_t) tickInterval);
 	LEDMap[rgbNumber].gvel = ((LEDMap[rgbNumber].greenTarget - LEDMap[rgbNumber].green) / (uint8_t) tickInterval);
-	LEDMap[rgbNumber].rvel = ((LEDMap[rgbNumber].redTarget - LEDMap[rgbNumber].red) / (uint8_t) tickInterval);
-	if(LEDMap[rgbNumber].rvel > 0){
-		cout<<"9 rvel is greater than 0"<<endl;
+	LEDMap[rgbNumber].rvel = (((double) LEDMap[rgbNumber].redTarget - (double) LEDMap[rgbNumber].red) / (double) tickInterval);
+	if(LEDMap[rgbNumber].rvel == -12.7){
+		cout<<"9 rvel is -12.7"<<endl;
 	}
+		LEDMap[rgbNumber].redSet = LEDMap[rgbNumber].red;
+		LEDMap[rgbNumber].greenSet = LEDMap[rgbNumber].green;
+		LEDMap[rgbNumber].blueSet = LEDMap[rgbNumber].blue;
+		LEDMap[rgbNumber].doingGradual = true;
 }
 
 int main(){
@@ -229,7 +255,6 @@ while(ending == false){
 	case 1:
 		
 		break;
-
 	default:
 		break;
 }
@@ -241,21 +266,23 @@ if(switchTracker != switcher){
 }
 */
 
-	//rgb.LEDMap[8].color = 0xFF8800;
+	rgb.LEDMap[8].color = 0xFF0000;
 	//rgb.LEDMap[7].red = 255;
-	rgb.LEDMap[8].red = LEDS::minPosition;
 	rgb.LEDMap[9].red = 255;
 	//rgb.LEDMap[9].rvel =10;
 	//rgb.LEDMap[6].bvel = 10;
 	//rgb.LEDMap[6].rvel = -10;
 	//rgb.LEDMap[6].red = 255;
-	rgb.GradualColorChangeSet(9,0x000000,20);
+	rgb.GradualColorChangeSet(9,0x010000,20);
 	rgb.RenderArray();
 	for(int g = 0;g<80;g++){
 	usleep(300000);
 	//rgb.MoveArray(true,true,1);
-	if(rgb.LEDMap[9].rvel < 0){
-		cout<<"it is less"<<endl;
+	if(rgb.LEDMap[9].red == 0){
+		cout<<"redcom is zero"<<endl;
+	}
+	if(rgb.LEDMap[9].redTarget == 1){
+		cout<<"it is one"<<endl;
 	}
 	rgb.CalcVelAccel();
 	rgb.RenderArray();
