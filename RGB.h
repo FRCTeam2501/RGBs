@@ -46,13 +46,14 @@ bool designChanged = true;
 int switcher = 1;
 int switchTracker = 1;
 
+
 class RGB
 {
 
 private:
     
     int32_t ledCount = COLORS::numberOfLeds;
-
+	int test = 0;
 	
 
 public:
@@ -89,7 +90,7 @@ public:
 
 	void CalcVelAccel();
 
-	void GradualColorChangeSet(int rgbNumber, int targetColor, int tickInterval);
+	void GradualColorChangeSet(int rgbNumber, uint32_t targetColor, int tickInterval);
 
 	struct CRGB
 	{
@@ -119,6 +120,8 @@ public:
 		double blueSet;
 		double greenSet;
 		double redSet;
+
+		bool doingGradual;
 	};
 	CRGB LEDStore;
 	CRGB LEDMap[COLORS::numberOfLeds];
