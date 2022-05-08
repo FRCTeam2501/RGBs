@@ -1035,3 +1035,75 @@ void MainWindow::on_PlayListRenderButton_clicked()
     cout<<"test 1"<<endl;
     PlayListInit(ui->PlayListRenderSpin->value());
 }
+
+void MainWindow::on_MultplyerSpin1_valueChanged(int arg1)
+{
+    //ui->MultplyerSpin1->setValue(arg1);
+    ui->MultplyerSpin2->setValue(arg1);
+//cout<<"multplyer1 "<<(10^arg1)<<endl;
+    int adder = 1;
+    switch(arg1){
+        case 4: adder = adder*10;
+        case 3: adder = adder*10;
+        case 2: adder = adder*10;
+        case 1: adder = adder*10;
+        default: break;
+    }
+    ui->spinBox->setSingleStep(adder);
+    ui->spinBox_3->setSingleStep(adder);
+    ui->spinBox_4->setSingleStep(adder);
+    ui->WaveJumpDist->setSingleStep(adder);
+    ui->WaveStartPlace->setSingleStep(adder);
+    ui->WaveTickChange->setSingleStep(adder);
+    ui->PlayListDeleteSpin->setSingleStep(adder);
+    ui->PlayListMinSpinBox->setSingleStep(adder);
+    ui->PlayListRenderSpin->setSingleStep(adder);
+    ui->PlayListSecSpinBox->setSingleStep(adder);
+    ui->WaveTicksBetweenMove->setSingleStep(adder);
+    ui->PlayListHourSpinBox->setSingleStep(adder);
+    ui->PlayListAddSpinBox->setSingleStep(adder);
+    ui->WaveTicksToNextAdd->setSingleStep(adder);
+    ui->SaveStateDeleteSpin->setSingleStep(adder);
+    ui->SaveStateRenderSpin->setSingleStep(adder);
+
+}
+
+void MainWindow::on_MultplyerSpin2_valueChanged(int arg1)
+{
+    ui->MultplyerSpin1->setValue(arg1);
+    //ui->MultplyerSpin2->setValue(arg1);
+
+    int adder = 1;
+    switch(arg1){
+        case 4: adder = adder*10;
+        case 3: adder = adder*10;
+        case 2: adder = adder*10;
+        case 1: adder = adder*10;
+        default: break;
+    }
+//cout<<"multplyer1 "<<(adder)<<endl;
+    ui->spinBox->setSingleStep(adder);
+    ui->spinBox_3->setSingleStep(adder);
+    ui->spinBox_4->setSingleStep(adder);
+    ui->WaveJumpDist->setSingleStep(adder);
+    ui->WaveStartPlace->setSingleStep(adder);
+    ui->WaveTickChange->setSingleStep(adder);
+    ui->PlayListDeleteSpin->setSingleStep(adder);
+    ui->PlayListMinSpinBox->setSingleStep(adder);
+    ui->PlayListRenderSpin->setSingleStep(adder);
+    ui->PlayListSecSpinBox->setSingleStep(adder);
+    ui->WaveTicksBetweenMove->setSingleStep(adder);
+    ui->PlayListHourSpinBox->setSingleStep(adder);
+    ui->PlayListAddSpinBox->setSingleStep(adder);
+    ui->WaveTicksToNextAdd->setSingleStep(adder);
+    ui->SaveStateDeleteSpin->setSingleStep(adder);
+    ui->SaveStateRenderSpin->setSingleStep(adder);
+    //ui->SaveStateRenderSpin->setSingleStep();
+}
+
+
+
+void MainWindow::on_MultplyerSpin2_valueChanged(const QString &arg1)
+{
+
+}
